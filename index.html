@@ -510,94 +510,67 @@
 </div>
 
 <script>
-// ─────────────────────────────────────────────────────
-//  НАЛАШТУВАННЯ — замініть на свої значення
-// ─────────────────────────────────────────────────────
-const TELEGRAM_BOT_TOKEN = 'ВСТАВТЕ_ТОКЕН_БОТА_ТУТ';   // від @BotFather
-const TELEGRAM_CHAT_ID   = '477855129';                  // ваш chat_id
-const SHEETS_WEBHOOK_URL = 'ВСТАВТЕ_URL_APPS_SCRIPT';    // URL з Google Apps Script
-// ─────────────────────────────────────────────────────
+const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby-pYeFuTySFJ9_JKIq_d2gF5yJolVJOpnLpYnCvbC7gomRPJ9GRGP-URzXtRwVYG8Wxg/exec';
 
 async function handleSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('zamovlennyaForm');
-  const fd   = new FormData(form);
-  const btn  = form.querySelector('.form-btn');
+  const fd = new FormData(form);
+  const btn = form.querySelector('.form-btn');
 
-  const name    = String(fd.get('name')    || '').trim();
-  const phone   = String(fd.get('phone')   || '').trim();
+  const name = String(fd.get('name') || '').trim();
+  const phone = String(fd.get('phone') || '').trim();
   const service = String(fd.get('service') || '').trim();
   const details = String(fd.get('details') || '').trim();
 
   if (!name || !phone) {
-    alert("Вкажіть ім'я та телефон");
+    document.querySelector('#modal h3').textContent = '⚠️ ЗАПОВНІТЬ ПОЛЯ';
+    document.querySelector('#modal p').textContent = "Вкажіть ім'я та телефон.";
+    document.getElementById('modal').classList.add('open');
     return;
   }
 
   btn.disabled = true;
+  const originalText = btn.textContent;
   btn.textContent = '⏳ Відправляємо…';
 
-  const now = new Date().toLocaleString('uk-UA');
-
-  const tgMessage = [
-    '📥 *НОВА ЗАЯВКА З САЙТУ*',
-    '',
-    `👤 Ім'я: ${name}`,
-    `📞 Телефон: ${phone}`,
-    `🛠 Тип робіт: ${service || 'Не вказано'}`,
-    `📍 Деталі: ${details || 'Не вказано'}`,
-    `🕒 Час: ${now}`
-  ].join('\n');
-
-  const sheetsPayload = {
-    source:   'Сайт',
+  const payload = {
+    source: 'Сайт',
     name,
     phone,
-    service:  service || '',
-    address:  details || '',
-    date:     '',
-    comment:  '',
-    tg_user:  '',
-    tg_id:    '',
-    datetime: now,
+    service: service || '',
+    address: details || '',
+    date: '',
+    comment: '',
+    tg_user: '',
+    tg_id: '',
+    datetime: new Date().toLocaleString('uk-UA')
   };
 
-  let tgOk = false, sheetsOk = false;
-
-  // 1. Telegram
   try {
-    const res = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    const response = await fetch(SHEETS_WEBHOOK_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: TELEGRAM_CHAT_ID, text: tgMessage, parse_mode: 'Markdown' })
+      mode: 'cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
     });
-    const json = await res.json();
-    tgOk = json.ok;
-  } catch (err) { console.warn('Telegram error:', err); }
 
-  // 2. Google Sheets
-  try {
-    await fetch(SHEETS_WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(sheetsPayload)
-    });
-    sheetsOk = true;
-  } catch (err) { console.warn('Sheets error:', err); }
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-  btn.disabled = false;
-  btn.textContent = '🚀 Надіслати заявку';
-
-  if (tgOk || sheetsOk) {
     document.querySelector('#modal h3').textContent = '🚀 ЗАЯВКУ ВІДПРАВЛЕНО!';
-    document.querySelector('#modal p').textContent  = "Заявка вже у нас. Зв'яжуся протягом 10 хвилин.";
+    document.querySelector('#modal p').textContent = "Заявка вже у нас. Зв'яжуся протягом 10 хвилин.";
     document.getElementById('modal').classList.add('open');
     form.reset();
-  } else {
+  } catch (err) {
+    console.error('Submit error:', err);
     document.querySelector('#modal h3').textContent = '❌ ПОМИЛКА';
-    document.querySelector('#modal p').textContent  = 'Не вдалося надіслати заявку. Будь ласка, зателефонуйте: 0982769859';
+    document.querySelector('#modal p').textContent = 'Не вдалося надіслати заявку. Будь ласка, зателефонуйте: 0982769859';
     document.getElementById('modal').classList.add('open');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
   }
 }
 

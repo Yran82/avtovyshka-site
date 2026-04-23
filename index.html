@@ -510,63 +510,71 @@
 </div>
 
 <script>
-const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby-pYeFuTySFJ9_JKIq_d2gF5yJolVJOpnLpYnCvbC7gomRPJ9GRGP-URzXtRwVYG8Wxg/exec';
+// ─────────────────────────────────────────────────────
+//  ЄДИНЕ налаштування для сайту — URL Apps Script
+//  Токен Telegram тут НЕ потрібен — він захований в Apps Script
+//  Замініть на ваш URL після розгортання Code.gs
+// ─────────────────────────────────────────────────────
+const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfyc.../exec';
+// ─────────────────────────────────────────────────────
 
 async function handleSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('zamovlennyaForm');
-  const fd = new FormData(form);
-  const btn = form.querySelector('.form-btn');
+  const fd   = new FormData(form);
+  const btn  = form.querySelector('.form-btn');
 
-  const name = String(fd.get('name') || '').trim();
-  const phone = String(fd.get('phone') || '').trim();
+  const name    = String(fd.get('name')    || '').trim();
+  const phone   = String(fd.get('phone')   || '').trim();
   const service = String(fd.get('service') || '').trim();
   const details = String(fd.get('details') || '').trim();
 
   if (!name || !phone) {
-    document.querySelector('#modal h3').textContent = '⚠️ ЗАПОВНІТЬ ПОЛЯ';
-    document.querySelector('#modal p').textContent = "Вкажіть ім'я та телефон.";
-    document.getElementById('modal').classList.add('open');
+    alert("Вкажіть ім'я та телефон");
     return;
   }
 
   btn.disabled = true;
-  const originalText = btn.textContent;
   btn.textContent = '⏳ Відправляємо…';
 
   const payload = {
-    source: 'Сайт',
+    source:  'Сайт',
     name,
     phone,
-    service: service || '',
+    service: service || 'Не вказано',
     address: details || '',
-    date: '',
+    date:    '',
     comment: '',
-    tg_user: '',
-    tg_id: '',
-    datetime: new Date().toLocaleString('uk-UA')
+    datetime: new Date().toLocaleString('uk-UA'),
   };
 
+  let ok = false;
   try {
+    // Apps Script отримує заявку і сам надсилає в Telegram + записує в Sheets
+    // Токен Telegram зберігається ТІЛЬКИ в Apps Script — не в цьому файлі
     await fetch(SHEETS_WEBHOOK_URL, {
       method: 'POST',
       mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
+    ok = true;
+  } catch (err) {
+    console.warn('Webhook error:', err);
+  }
 
+  btn.disabled = false;
+  btn.textContent = '🚀 Надіслати заявку';
+
+  if (ok) {
     document.querySelector('#modal h3').textContent = '🚀 ЗАЯВКУ ВІДПРАВЛЕНО!';
-    document.querySelector('#modal p').textContent = "Заявка вже у нас. Зв'яжуся протягом 10 хвилин.";
+    document.querySelector('#modal p').textContent  = "Заявка вже у нас. Зв'яжуся протягом 10 хвилин.";
     document.getElementById('modal').classList.add('open');
     form.reset();
-  } catch (err) {
-    console.error('Submit error:', err);
+  } else {
     document.querySelector('#modal h3').textContent = '❌ ПОМИЛКА';
-    document.querySelector('#modal p').textContent = 'Не вдалося надіслати заявку. Будь ласка, зателефонуйте: 0982769859';
+    document.querySelector('#modal p').textContent  = 'Не вдалося надіслати заявку. Зателефонуйте: 0982769859';
     document.getElementById('modal').classList.add('open');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = originalText;
   }
 }
 

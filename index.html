@@ -548,16 +548,12 @@ async function handleSubmit(e) {
   };
 
   try {
-    const response = await fetch(SHEETS_WEBHOOK_URL, {
+    await fetch(SHEETS_WEBHOOK_URL, {
       method: 'POST',
-      mode: 'cors',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`);
-    }
 
     document.querySelector('#modal h3').textContent = '🚀 ЗАЯВКУ ВІДПРАВЛЕНО!';
     document.querySelector('#modal p').textContent = "Заявка вже у нас. Зв'яжуся протягом 10 хвилин.";

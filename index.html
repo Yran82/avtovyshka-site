@@ -542,10 +542,10 @@
 
 <div class="modal-overlay" id="modal">
   <div class="modal">
-    <div style="font-size:3rem;margin-bottom:12px;">✅</div>
+    <div id="modalIcon" style="font-size:3rem;margin-bottom:12px;">✅</div>
     <h3>ЗАЯВКУ ПРИЙНЯТО В ОБРОБКУ</h3>
     <p>Заявку прийнято в обробку. Якщо не відповіли протягом 10 хвилин — телефонуйте 0982769859</p>
-    <button class="modal-close" onclick="closeModal()">Чудово, чекаю!</button>
+    <button class="modal-close" onclick="closeModal()">Закрити</button>
   </div>
 </div>
 
@@ -560,9 +560,10 @@
 // ─────────────────────────────────────────────────────
 //  ЄДИНЕ налаштування для сайту — URL Apps Script
 //  Токен Telegram тут НЕ потрібен — він захований в Apps Script
-//  Замініть на ваш URL після розгортання Code.gs
+//  Вставте нижче URL розгорнутого Apps Script Web App.
+//  Якщо лишити порожнім або placeholder, форма покаже, що її ще не підключено.
 // ─────────────────────────────────────────────────────
-const SHEETS_WEBHOOK_URL = 'ВСТАВТЕ_URL_APPS_SCRIPT';
+const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbziHfVq6vUsw44Z70rFDSQCXIsySkA0XINiELeN0dGzt70fZ1oVvDY21Antq_ZMbPeq/exec';
 // ─────────────────────────────────────────────────────
 
 async function handleSubmit(e) {
@@ -600,11 +601,18 @@ async function handleSubmit(e) {
     datetime: new Date().toLocaleString('uk-UA'),
   };
 
-  let acceptedForProcessing = false;
+  if (!isWebhookConfigured(SHEETS_WEBHOOK_URL)) {
+    btn.disabled = false;
+    btn.textContent = '🚀 Надіслати заявку';
+    showModal(
+      '⚠️',
+      'ФОРМА ЩЕ НЕ ПІДКЛЮЧЕНА',
+      'Форма ще не підключена. Зателефонуйте 0982769859'
+    );
+    return;
+  }
+
   try {
-    if (!/^https:\/\/script\.google\.com\/macros\//.test(SHEETS_WEBHOOK_URL)) {
-      throw new Error('Webhook URL is not configured');
-    }
     // Apps Script отримує заявку і сам надсилає в Telegram + записує в Sheets
     // Через no-cors браузер не дозволяє перевірити відповідь сервера.
     await fetch(SHEETS_WEBHOOK_URL, {
@@ -613,27 +621,41 @@ async function handleSubmit(e) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    acceptedForProcessing = true;
+
+    btn.disabled = false;
+    btn.textContent = '🚀 Надіслати заявку';
+    showModal(
+      '✅',
+      'ЗАЯВКУ ПРИЙНЯТО В ОБРОБКУ',
+      'Заявку прийнято в обробку. Якщо не відповіли протягом 10 хвилин — телефонуйте 0982769859'
+    );
+    form.reset();
   } catch (err) {
     console.warn('Webhook error:', err);
-  }
-
-  btn.disabled = false;
-  btn.textContent = '🚀 Надіслати заявку';
-
-  if (acceptedForProcessing) {
-    document.querySelector('#modal h3').textContent = '🚀 ЗАЯВКУ ПРИЙНЯТО В ОБРОБКУ';
-    document.querySelector('#modal p').textContent  = 'Заявку прийнято в обробку. Якщо не відповіли протягом 10 хвилин — телефонуйте 0982769859';
-    document.getElementById('modal').classList.add('open');
-    form.reset();
-  } else {
-    document.querySelector('#modal h3').textContent = '❌ ПОМИЛКА';
-    document.querySelector('#modal p').textContent  = 'Не вдалося надіслати заявку. Зателефонуйте: 0982769859';
-    document.getElementById('modal').classList.add('open');
+    btn.disabled = false;
+    btn.textContent = '🚀 Надіслати заявку';
+    showModal(
+      '❌',
+      'ПОМИЛКА',
+      'Не вдалося надіслати заявку. Зателефонуйте 0982769859'
+    );
   }
 }
 
 document.getElementById('zamovlennyaForm').addEventListener('submit', handleSubmit);
+
+function isWebhookConfigured(url) {
+  const value = (url || '').trim();
+  return /^https:\/\/script\.google\.com\/macros\//.test(value) && !/ВСТАВТЕ|PLACEHOLDER|YOUR_/i.test(value);
+}
+
+function showModal(icon, title, message) {
+  document.getElementById('modalIcon').textContent = icon;
+  document.querySelector('#modal h3').textContent = title;
+  document.querySelector('#modal p').textContent = message;
+  document.querySelector('#modal .modal-close').textContent = 'Закрити';
+  document.getElementById('modal').classList.add('open');
+}
 
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });

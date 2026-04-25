@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ПІДЙОМ — Оренда Автовишки Київ | Від власника</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Cpath d='M12 44h40M17 44l8-24h14l8 24M23 31h18' stroke='%2306b6d4' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='22' cy='49' r='4' fill='%233b82f6'/%3E%3Ccircle cx='42' cy='49' r='4' fill='%233b82f6'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,13 +22,17 @@
     --grad: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #0ea5e9 100%);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
   body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--white); overflow-x: hidden; }
+  section { max-width: 100%; scroll-margin-top: 96px; }
+  img, video, canvas, svg { max-width: 100%; }
+  .hero-actions, .hero-stats, .photo-mosaic, .gallery-grid, .services-grid, .steps, .why-grid, .contact-wrap, .form { max-width: 100%; }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
+    gap: 16px;
     padding: 16px 5%;
     background: rgba(13,17,23,0.9);
     backdrop-filter: blur(20px);
@@ -45,6 +50,13 @@
     text-decoration: none; transition: opacity .2s, transform .15s;
   }
   .nav-cta:hover { opacity: .9; transform: translateY(-1px); }
+  .mobile-nav { display: none; }
+  .mobile-nav a {
+    color: var(--white); text-decoration: none; text-align: center;
+    font-size: .76rem; font-weight: 800; letter-spacing: .04em;
+    padding: 9px 10px; border: 1px solid rgba(59,130,246,.28);
+    border-radius: 8px; background: rgba(59,130,246,.08);
+  }
 
   /* HERO */
   #hero {
@@ -66,7 +78,7 @@
     background-image: linear-gradient(rgba(59,130,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,1) 1px, transparent 1px);
     background-size: 60px 60px;
   }
-  .hero-left { position: relative; z-index: 1; }
+  .hero-left { position: relative; z-index: 1; max-width: 100%; min-width: 0; }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 8px;
     background: rgba(59,130,246,.1); border: 1px solid rgba(59,130,246,.3);
@@ -111,7 +123,7 @@
   .stat-label { color: var(--muted); font-size: .75rem; font-weight: 600; letter-spacing: .05em; margin-top: 3px; }
 
   /* HERO RIGHT — photo mosaic */
-  .hero-right { position: relative; z-index: 1; animation: fadeUp .7s .25s both; }
+  .hero-right { position: relative; z-index: 1; animation: fadeUp .7s .25s both; max-width: 100%; min-width: 0; }
   .photo-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .mosaic-main { grid-column: 1 / 3; border-radius: var(--radius); overflow: hidden; position: relative; aspect-ratio: 16/9; }
   .mosaic-main img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .5s; }
@@ -227,6 +239,8 @@
   .modal h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.3rem; margin-bottom: 10px; }
   .modal p { color: var(--muted); margin-bottom: 28px; line-height: 1.6; }
   .modal-close { background: var(--grad); color: #fff; border: none; cursor: pointer; padding: 13px 28px; border-radius: 8px; font-family: 'Manrope', sans-serif; font-weight: 800; font-size: .92rem; }
+  .lightbox-modal { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .lightbox-img { max-width: min(100%, 980px); max-height: 76vh; border-radius: 12px; object-fit: contain; }
 
   /* FLOAT */
   .float-cta { position: fixed; bottom: 26px; right: 26px; z-index: 90; background: var(--grad); color: #fff; border: none; cursor: pointer; width: 58px; height: 58px; border-radius: 50%; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(6,182,212,.4); transition: transform .2s; text-decoration: none; animation: floatPop 1s 2s both; }
@@ -234,14 +248,35 @@
   @keyframes floatPop { from{opacity:0;transform:scale(.4)} to{opacity:1;transform:scale(1)} }
 
   @media(max-width: 900px) {
-    #hero { grid-template-columns: 1fr; padding-top: 100px; }
+    html { scroll-padding-top: 138px; }
+    section { scroll-margin-top: 138px; }
+    nav { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; padding: 14px 5% 10px; }
+    .logo { font-size: 1.65rem; }
+    .nav-cta { justify-self: end; min-width: 0; max-width: 150px; padding: 10px 14px; font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mobile-nav { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; }
+    #hero { grid-template-columns: 1fr; min-height: auto; padding: 154px 5% 64px; }
+    .hero-left, .hero-sub, .hero-actions, .hero-stats { width: 100%; max-width: 100%; }
+    h1 { font-size: clamp(2.35rem, 11.5vw, 2.95rem); line-height: .98; letter-spacing: 0; overflow-wrap: normal; }
+    h1 .grad { letter-spacing: 0; }
+    .hero-badge { max-width: 100%; font-size: .68rem; letter-spacing: .06em; white-space: normal; }
+    .hero-sub { font-size: .96rem; line-height: 1.65; }
+    .hero-actions { flex-direction: column; gap: 12px; }
+    .hero-actions .btn-primary, .hero-actions .btn-ghost { width: 100%; justify-content: center; }
+    .hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 18px; margin-top: 40px; }
+    .stat-num { font-size: 2.25rem; }
     .hero-right { display: none; }
     .steps { grid-template-columns: 1fr 1fr; }
     .why-grid { grid-template-columns: 1fr; }
     .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
     .form-row { grid-template-columns: 1fr; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .float-cta { display: none; }
     nav ul { display: none; }
+  }
+  @media(max-width: 430px) {
+    .btn-primary, .btn-ghost { padding-left: 18px; padding-right: 18px; }
+    .contact-links .c-link { padding: 16px; }
+    .c-text { min-width: 0; overflow-wrap: anywhere; }
   }
 </style>
 </head>
@@ -256,6 +291,11 @@
     <li><a href="#pricing">Ціни</a></li><li><a href="#contact">Контакти</a></li>
   </ul>
   <a href="#contact" class="nav-cta">📞 Замовити</a>
+  <div class="mobile-nav" aria-label="Швидка навігація">
+    <a href="#gallery">Роботи</a>
+    <a href="#pricing">Ціни</a>
+    <a href="#contact">Контакти</a>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -275,10 +315,10 @@
       <a href="https://t.me/avtovyshka_kiev_bot" target="_blank" class="btn-ghost">✈️ Telegram-бот</a>
     </div>
     <div class="hero-stats">
-      <div><div class="stat-num">1год</div><div class="stat-label">Час подачі</div></div>
+      <div><div class="stat-num">1 год</div><div class="stat-label">Час подачі</div></div>
       <div><div class="stat-num">500+</div><div class="stat-label">Виконаних робіт</div></div>
       <div><div class="stat-num">24/7</div><div class="stat-label">Доступність</div></div>
-      <div><div class="stat-num">100км</div><div class="stat-label">Радіус виїзду</div></div>
+      <div><div class="stat-num">100 км</div><div class="stat-label">Радіус виїзду</div></div>
     </div>
   </div>
   <div class="hero-right">
@@ -455,9 +495,9 @@
           <div class="c-icon">✈️</div>
           <div class="c-text">@avtovyshka_kiev_bot — Telegram-бот<small>Відповідаю швидко · 24/7</small></div>
         </a>
-        <a href="viber://chat?number=380982769859" class="c-link">
+        <a href="viber://chat?number=%2B380982769859" class="c-link">
           <div class="c-icon">💜</div>
-          <div class="c-text">Viber — 0982769859<small>Пишіть або дзвоніть</small></div>
+          <div class="c-text">Viber — +38 (098) 276-98-59<small>Пишіть або дзвоніть</small></div>
         </a>
         <a href="mailto:paletskijurij@gmail.com" class="c-link">
           <div class="c-icon">📧</div>
@@ -469,7 +509,7 @@
       <form class="form" id="zamovlennyaForm">
         <div class="form-row">
           <div class="fg"><label>Ваше ім'я</label><input type="text" name="name" placeholder="Іван" required></div>
-          <div class="fg"><label>Телефон</label><input type="tel" name="phone" placeholder="+38 (0__)__-__-__" required></div>
+          <div class="fg"><label>Телефон</label><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__" pattern="^(\+?38)?\s?\(?0\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$" title="Вкажіть український номер, наприклад +38 (098) 276-98-59" required></div>
         </div>
         <div class="fg">
           <label>Тип робіт</label>
@@ -494,7 +534,7 @@
 
 <footer>
   <div class="logo">ПІД<span>ЙОМ</span></div>
-  <p>© 2024 ПІДЙОМ · Оренда автовишки · Київ і область</p>
+  <p>© 2026 ПІДЙОМ · Оренда автовишки · Київ і область</p>
   <p style="color:var(--muted);font-size:.8rem;">📞 0982769859 · ✈️ @avtovyshka_kiev_bot</p>
 </footer>
 
@@ -503,9 +543,16 @@
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <div style="font-size:3rem;margin-bottom:12px;">✅</div>
-    <h3>ЗАЯВКУ ПРИЙНЯТО!</h3>
-    <p>Дякуємо! Зв'яжуся з вами протягом 10 хвилин для уточнення деталей.</p>
+    <h3>ЗАЯВКУ ПРИЙНЯТО В ОБРОБКУ</h3>
+    <p>Заявку прийнято в обробку. Якщо не відповіли протягом 10 хвилин — телефонуйте 0982769859</p>
     <button class="modal-close" onclick="closeModal()">Чудово, чекаю!</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="galleryLightbox" aria-hidden="true">
+  <div class="lightbox-modal">
+    <img class="lightbox-img" src="" alt="Фото виконаної роботи">
+    <button class="modal-close" type="button" onclick="closeGalleryLightbox()">Закрити</button>
   </div>
 </div>
 
@@ -515,12 +562,17 @@
 //  Токен Telegram тут НЕ потрібен — він захований в Apps Script
 //  Замініть на ваш URL після розгортання Code.gs
 // ─────────────────────────────────────────────────────
-const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbziHfVq6vUsw44Z70rFDSQCXIsySkA0XINiELeN0dGzt70fZ1oVvDY21Antq_ZMbPeq/exec';
+const SHEETS_WEBHOOK_URL = 'ВСТАВТЕ_URL_APPS_SCRIPT';
 // ─────────────────────────────────────────────────────
 
 async function handleSubmit(e) {
   e.preventDefault();
   const form = document.getElementById('zamovlennyaForm');
+  if (!form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
   const fd   = new FormData(form);
   const btn  = form.querySelector('.form-btn');
 
@@ -548,17 +600,20 @@ async function handleSubmit(e) {
     datetime: new Date().toLocaleString('uk-UA'),
   };
 
-  let ok = false;
+  let acceptedForProcessing = false;
   try {
+    if (!/^https:\/\/script\.google\.com\/macros\//.test(SHEETS_WEBHOOK_URL)) {
+      throw new Error('Webhook URL is not configured');
+    }
     // Apps Script отримує заявку і сам надсилає в Telegram + записує в Sheets
-    // Токен Telegram зберігається ТІЛЬКИ в Apps Script — не в цьому файлі
+    // Через no-cors браузер не дозволяє перевірити відповідь сервера.
     await fetch(SHEETS_WEBHOOK_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     });
-    ok = true;
+    acceptedForProcessing = true;
   } catch (err) {
     console.warn('Webhook error:', err);
   }
@@ -566,9 +621,9 @@ async function handleSubmit(e) {
   btn.disabled = false;
   btn.textContent = '🚀 Надіслати заявку';
 
-  if (ok) {
-    document.querySelector('#modal h3').textContent = '🚀 ЗАЯВКУ ВІДПРАВЛЕНО!';
-    document.querySelector('#modal p').textContent  = "Заявка вже у нас. Зв'яжуся протягом 10 хвилин.";
+  if (acceptedForProcessing) {
+    document.querySelector('#modal h3').textContent = '🚀 ЗАЯВКУ ПРИЙНЯТО В ОБРОБКУ';
+    document.querySelector('#modal p').textContent  = 'Заявку прийнято в обробку. Якщо не відповіли протягом 10 хвилин — телефонуйте 0982769859';
     document.getElementById('modal').classList.add('open');
     form.reset();
   } else {
@@ -582,6 +637,25 @@ document.getElementById('zamovlennyaForm').addEventListener('submit', handleSubm
 
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+function openGalleryLightbox(src, alt) {
+  const lightbox = document.getElementById('galleryLightbox');
+  const img = lightbox.querySelector('.lightbox-img');
+  img.src = src;
+  img.alt = alt || 'Фото виконаної роботи';
+  lightbox.classList.add('open');
+  lightbox.setAttribute('aria-hidden', 'false');
+}
+function closeGalleryLightbox() {
+  const lightbox = document.getElementById('galleryLightbox');
+  lightbox.classList.remove('open');
+  lightbox.setAttribute('aria-hidden', 'true');
+}
+document.querySelectorAll('.gal-item img').forEach(img => {
+  img.addEventListener('click', () => openGalleryLightbox(img.src, img.alt));
+});
+document.getElementById('galleryLightbox').addEventListener('click', function(e){ if(e.target===this) closeGalleryLightbox(); });
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeGalleryLightbox(); });
 
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });

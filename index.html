@@ -275,6 +275,15 @@
     .float-cta { display: none; }
     nav ul { display: none; }
   }
+  @media(max-width: 600px) {
+    nav { padding: 10px 5% 8px; gap: 10px; }
+    .logo { font-size: 1.48rem; letter-spacing: .08em; }
+    .nav-cta { max-width: 132px; padding: 8px 11px; font-size: .74rem; }
+    .mobile-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    .mobile-nav a { min-height: 32px; padding: 6px 7px; font-size: .7rem; }
+    .mobile-nav a:nth-child(4) { grid-column: 1; }
+    .mobile-nav a:nth-child(5) { grid-column: 2; }
+  }
   @media(max-width: 430px) {
     .btn-primary, .btn-ghost { padding-left: 18px; padding-right: 18px; }
     .contact-links .c-link { padding: 16px; }

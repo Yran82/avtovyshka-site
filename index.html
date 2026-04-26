@@ -20,20 +20,12 @@
     --muted: #8b949e;
     --radius: 14px;
     --grad: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #0ea5e9 100%);
-<<<<<<< HEAD
     --header-offset: 96px;
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; scroll-padding-top: var(--header-offset); }
   body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--white); overflow-x: hidden; }
   section { max-width: 100%; scroll-margin-top: var(--header-offset); }
-=======
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
-  body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--white); overflow-x: hidden; }
-  section { max-width: 100%; scroll-margin-top: 96px; }
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
   img, video, canvas, svg { max-width: 100%; }
   .hero-actions, .hero-stats, .photo-mosaic, .gallery-grid, .services-grid, .steps, .why-grid, .contact-wrap, .form { max-width: 100%; }
 
@@ -65,10 +57,7 @@
     font-size: .76rem; font-weight: 800; letter-spacing: .04em;
     padding: 9px 10px; border: 1px solid rgba(59,130,246,.28);
     border-radius: 8px; background: rgba(59,130,246,.08);
-<<<<<<< HEAD
     min-height: 38px; display: flex; align-items: center; justify-content: center; line-height: 1.15;
-=======
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
   }
 
   /* HERO */
@@ -261,13 +250,8 @@
   @keyframes floatPop { from{opacity:0;transform:scale(.4)} to{opacity:1;transform:scale(1)} }
 
   @media(max-width: 900px) {
-<<<<<<< HEAD
     html { scroll-padding-top: var(--header-offset); }
     section { scroll-margin-top: var(--header-offset); }
-=======
-    html { scroll-padding-top: 138px; }
-    section { scroll-margin-top: 138px; }
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
     nav { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; padding: 14px 5% 10px; }
     .logo { font-size: 1.65rem; }
     .nav-cta { justify-self: end; min-width: 0; max-width: 150px; padding: 10px 14px; font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -311,11 +295,8 @@
   <a href="#contact" class="nav-cta">📞 Замовити</a>
   <div class="mobile-nav" aria-label="Швидка навігація">
     <a href="#gallery">Роботи</a>
-<<<<<<< HEAD
     <a href="#services">Послуги</a>
     <a href="#how">Як замовити</a>
-=======
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
     <a href="#pricing">Ціни</a>
     <a href="#contact">Контакти</a>
   </div>
@@ -532,11 +513,7 @@
       <form class="form" id="zamovlennyaForm">
         <div class="form-row">
           <div class="fg"><label>Ваше ім'я</label><input type="text" name="name" placeholder="Іван" required></div>
-<<<<<<< HEAD
           <div class="fg"><label>Телефон</label><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__" pattern="^(?:\+?38[\s-]?)?\(?0\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$" title="Вкажіть український номер: 0982769859, 0660414894 або +38 (098) 276-98-59" required></div>
-=======
-          <div class="fg"><label>Телефон</label><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__" pattern="^(\+?38)?\s?\(?0\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$" title="Вкажіть український номер, наприклад +38 (098) 276-98-59" required></div>
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
         </div>
         <div class="fg">
           <label>Тип робіт</label>
@@ -605,7 +582,6 @@ async function handleSubmit(e) {
   const btn  = form.querySelector('.form-btn');
 
   const name    = String(fd.get('name')    || '').trim();
-<<<<<<< HEAD
   const phoneRaw = String(fd.get('phone')  || '').trim();
   const phone   = normalizeUaPhone(phoneRaw);
   const service = String(fd.get('service') || '').trim();
@@ -620,16 +596,6 @@ async function handleSubmit(e) {
     return;
   }
   form.elements.phone.value = phone;
-=======
-  const phone   = String(fd.get('phone')   || '').trim();
-  const service = String(fd.get('service') || '').trim();
-  const details = String(fd.get('details') || '').trim();
-
-  if (!name || !phone) {
-    alert("Вкажіть ім'я та телефон");
-    return;
-  }
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
 
   btn.disabled = true;
   btn.textContent = '⏳ Відправляємо…';
@@ -688,7 +654,6 @@ async function handleSubmit(e) {
 
 document.getElementById('zamovlennyaForm').addEventListener('submit', handleSubmit);
 
-<<<<<<< HEAD
 function normalizeUaPhone(value) {
   const digits = String(value || '').replace(/\D/g, '');
   if (digits.length === 10 && digits.startsWith('0')) return '+38' + digits;
@@ -696,8 +661,6 @@ function normalizeUaPhone(value) {
   return '';
 }
 
-=======
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
 function isWebhookConfigured(url) {
   const value = (url || '').trim();
   return /^https:\/\/script\.google\.com\/macros\//.test(value) && !/ВСТАВТЕ|PLACEHOLDER|YOUR_/i.test(value);
@@ -714,7 +677,6 @@ function showModal(icon, title, message) {
 function closeModal(){ document.getElementById('modal').classList.remove('open'); }
 document.getElementById('modal').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
 
-<<<<<<< HEAD
 function getHeaderOffset() {
   const header = document.querySelector('nav');
   return header ? Math.ceil(header.getBoundingClientRect().height) : 0;
@@ -754,8 +716,6 @@ window.addEventListener('load', function() {
   }
 });
 
-=======
->>>>>>> c0c4e5b90681349ee3967fce8f22f00a575204ab
 function openGalleryLightbox(src, alt) {
   const lightbox = document.getElementById('galleryLightbox');
   const img = lightbox.querySelector('.lightbox-img');

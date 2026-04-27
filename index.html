@@ -610,7 +610,7 @@
       <form class="form" id="zamovlennyaForm">
         <div class="form-row">
           <div class="fg"><label>Ваше ім'я</label><input type="text" name="name" placeholder="Іван" required></div>
-          <div class="fg"><label>Телефон</label><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__" pattern="^(?:\+?38[\s-]?)?\(?0\d{2}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$" title="Вкажіть український номер: 0982769859, 0660414894 або +38 (098) 276-98-59" required></div>
+          <div class="fg"><label>Телефон</label><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+38 (0__) ___-__-__" pattern="^(?:\+?38[-\s]?)?\(?0\d{2}\)?[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}$" title="Вкажіть український номер: 0982769859, 0660414894 або +38 (098) 276-98-59" required></div>
         </div>
         <div class="fg">
           <label>Тип робіт</label>
@@ -666,6 +666,14 @@
 // ─────────────────────────────────────────────────────
 const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbziHfVq6vUsw44Z70rFDSQCXIsySkA0XINiELeN0dGzt70fZ1oVvDY21Antq_ZMbPeq/exec';
 // ─────────────────────────────────────────────────────
+
+function trackGoogleAdsConversion() {
+  if (typeof gtag === 'function') {
+    gtag('event', 'conversion', {
+      'send_to': 'AW-18115171560'
+    });
+  }
+}
 
 async function handleSubmit(e) {
   e.preventDefault();
@@ -736,6 +744,7 @@ async function handleSubmit(e) {
       'ЗАЯВКУ ПРИЙНЯТО В ОБРОБКУ',
       'Заявку прийнято в обробку. Якщо не відповіли протягом 10 хвилин — телефонуйте 0982769859'
     );
+    trackGoogleAdsConversion();
     form.reset();
   } catch (err) {
     console.warn('Webhook error:', err);

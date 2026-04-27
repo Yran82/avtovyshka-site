@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ПІДЙОМ — Оренда Автовишки Київ | Від власника</title>
+<title>Оренда автовишки Київ та область | Підійом | 098 276 98 59</title>
+<meta name="description" content="Оренда автовишки в Києві та Київській області. Власна техніка, досвід з 2012 року, 2000+ виконаних виїздів, подача від 1 години. Монтаж реклами, фасадні роботи, обрізка дерев, електромонтаж. Телефон: 098 276 98 59.">
+<meta name="keywords" content="оренда автовишки Київ, автовишка Київ, автовишка Київська область, послуги автовишки, монтаж реклами, обрізка дерев, фасадні роботи, електромонтаж, Харківське шосе">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Cpath d='M12 44h40M17 44l8-24h14l8 24M23 31h18' stroke='%2306b6d4' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='22' cy='49' r='4' fill='%233b82f6'/%3E%3Ccircle cx='42' cy='49' r='4' fill='%233b82f6'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -27,7 +29,7 @@
   body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--white); overflow-x: hidden; }
   section { max-width: 100%; scroll-margin-top: var(--header-offset); }
   img, video, canvas, svg { max-width: 100%; }
-  .hero-actions, .hero-stats, .photo-mosaic, .gallery-grid, .services-grid, .steps, .why-grid, .contact-wrap, .form { max-width: 100%; }
+  .hero-actions, .hero-stats, .photo-mosaic, .gallery-grid, .services-grid, .steps, .why-grid, .reviews-grid, .faq-list, .contact-wrap, .form { max-width: 100%; }
 
   /* NAV */
   nav {
@@ -187,6 +189,21 @@
   .why-item h3 { font-weight: 800; margin-bottom: 7px; font-size: 1rem; }
   .why-item p { color: var(--muted); font-size: .88rem; line-height: 1.6; }
 
+  /* REVIEWS + FAQ */
+  #reviews { padding: 100px 5%; background: var(--dark); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .review-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 30px 28px; transition: border-color .25s, transform .25s, box-shadow .25s; }
+  .review-card:hover { border-color: #3b82f6; transform: translateY(-4px); box-shadow: 0 16px 50px rgba(59,130,246,.12); }
+  .review-name { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+  .review-work { color: #60a5fa; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 18px; }
+  .review-text { color: var(--muted); font-size: .9rem; line-height: 1.7; }
+  .review-note { color: var(--muted); font-size: .78rem; line-height: 1.6; margin-top: -32px; margin-bottom: 30px; }
+  #faq { padding: 100px 5%; background: var(--bg); }
+  .faq-list { display: grid; gap: 12px; }
+  .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 28px; }
+  .faq-item h3 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+  .faq-item p { color: var(--muted); font-size: .9rem; line-height: 1.7; }
+
   /* CONTACT */
   #contact { padding: 100px 5%; background: var(--dark); position: relative; overflow: hidden; }
   #contact::before { content: ''; position: absolute; top: -300px; left: -300px; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(59,130,246,.07) 0%, transparent 70%); pointer-events: none; }
@@ -269,6 +286,7 @@
     .hero-right { display: none; }
     .steps { grid-template-columns: 1fr 1fr; }
     .why-grid { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
     .contact-wrap { grid-template-columns: 1fr; gap: 48px; }
     .form-row { grid-template-columns: 1fr; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); }
@@ -328,10 +346,10 @@
       <a href="https://t.me/avtovyshka_kiev_bot" target="_blank" class="btn-ghost">✈️ Telegram-бот</a>
     </div>
     <div class="hero-stats">
-      <div><div class="stat-num">1 год</div><div class="stat-label">Час подачі</div></div>
-      <div><div class="stat-num">500+</div><div class="stat-label">Виконаних робіт</div></div>
-      <div><div class="stat-num">24/7</div><div class="stat-label">Доступність</div></div>
-      <div><div class="stat-num">100 км</div><div class="stat-label">Радіус виїзду</div></div>
+      <div><div class="stat-num">З 2012</div><div class="stat-label">На висоті</div></div>
+      <div><div class="stat-num">2000+</div><div class="stat-label">Виконаних виїздів</div></div>
+      <div><div class="stat-num">Київ та область</div><div class="stat-label">Зона роботи</div></div>
+      <div><div class="stat-num">від 1 години</div><div class="stat-label">Подача техніки</div></div>
     </div>
   </div>
   <div class="hero-right">
@@ -492,6 +510,64 @@
   <p style="color:#8b949e;font-size:.85rem;margin-top:28px;">* Виїзд за межі Києва — за домовленістю. Питання по ціні — <a href="tel:+380982769859" style="color:#60a5fa;text-decoration:none;">0982769859</a></p>
 </section>
 
+<!-- REVIEWS -->
+<section id="reviews">
+  <p class="section-tag">▸ Відгуки клієнтів</p>
+  <h2 class="section-title">МІСЦЕ ДЛЯ РЕАЛЬНИХ ВІДГУКІВ</h2>
+  <p class="section-sub">Після виконаних робіт тут можна швидко замінити заготовки на справжні відгуки клієнтів.</p>
+  <p class="review-note">Тексти нижче — тимчасові шаблони, не остаточні відгуки.</p>
+  <div class="reviews-grid">
+    <article class="review-card">
+      <div class="review-name">Клієнт</div>
+      <div class="review-work">Монтаж реклами</div>
+      <p class="review-text">Тут буде реальний відгук клієнта після виконаної роботи.</p>
+    </article>
+    <article class="review-card">
+      <div class="review-name">Клієнт</div>
+      <div class="review-work">Фасадні роботи</div>
+      <p class="review-text">Тут буде реальний відгук клієнта після виконаної роботи.</p>
+    </article>
+    <article class="review-card">
+      <div class="review-name">Клієнт</div>
+      <div class="review-work">Обрізка дерев</div>
+      <p class="review-text">Тут буде реальний відгук клієнта після виконаної роботи.</p>
+    </article>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <p class="section-tag">▸ Питання та відповіді</p>
+  <h2 class="section-title">FAQ</h2>
+  <p class="section-sub">Коротко про оренду автовишки, оплату та виїзд по Києву й області.</p>
+  <div class="faq-list">
+    <article class="faq-item">
+      <h3>Яка мінімальна оренда автовишки?</h3>
+      <p>Мінімальне замовлення — до 2 годин, 4 500 грн готівкою. Безготівковий розрахунок — 5 400 грн.</p>
+    </article>
+    <article class="faq-item">
+      <h3>Куди виїжджаєте?</h3>
+      <p>Працюємо по Києву та Київській області. Виїзд за межі Києва узгоджується окремо.</p>
+    </article>
+    <article class="faq-item">
+      <h3>Як швидко може приїхати автовишка?</h3>
+      <p>У багатьох випадках подача можлива від 1 години, залежно від адреси, часу та зайнятості техніки.</p>
+    </article>
+    <article class="faq-item">
+      <h3>Які роботи виконуєте?</h3>
+      <p>Монтаж і демонтаж реклами, фасадні роботи, електромонтаж, обрізка дерев, миття фасадів, покрівельні роботи, фото та відео з висоти.</p>
+    </article>
+    <article class="faq-item">
+      <h3>Чи можна оплатити безготівково?</h3>
+      <p>Так, можлива готівка або безготівковий розрахунок. Для безготівки ціна вказана окремо в прайсі.</p>
+    </article>
+    <article class="faq-item">
+      <h3>Ви посередники чи власники техніки?</h3>
+      <p>Працюємо від власника. Власна техніка, прямий контакт і швидке узгодження деталей.</p>
+    </article>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact">
   <div class="contact-wrap">
@@ -516,6 +592,10 @@
           <div class="c-icon">📧</div>
           <div class="c-text">paletskijurij@gmail.com<small>Електронна пошта</small></div>
         </a>
+        <div class="c-link">
+          <div class="c-icon">📍</div>
+          <div class="c-text">м. Київ, Харківське шосе, 175<small>База техніки / виїзд по Києву та області</small></div>
+        </div>
       </div>
     </div>
     <div>
@@ -747,7 +827,7 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeGa
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
 }, {threshold:.08});
-document.querySelectorAll('.svc-card,.step,.why-item,.gal-item').forEach(el => {
+document.querySelectorAll('.svc-card,.step,.why-item,.review-card,.faq-item,.gal-item').forEach(el => {
   el.style.opacity='0'; el.style.transform='translateY(22px)';
   el.style.transition='opacity .5s ease, transform .5s ease';
   obs.observe(el);

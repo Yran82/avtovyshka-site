@@ -670,9 +670,9 @@ const SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbziHfVq6vUsw
 function trackGoogleAdsConversion() {
   if (typeof gtag === 'function') {
     gtag('event', 'conversion', {
-      'send_to': 'AW-18115171560/uSKOCPPpzqMcEOip_r1D',
-'value': 1.0,
-'currency': 'UAH'
+      'send_to': 'AW-18115171560/tEZWCJvzt6QcEOip_r1D',
+      'value': 1.0,
+      'currency': 'UAH'
     });
   }
 }
@@ -741,12 +741,12 @@ async function handleSubmit(e) {
 
     btn.disabled = false;
     btn.textContent = '🚀 Надіслати заявку';
+    trackGoogleAdsConversion();
     showModal(
       '✅',
       'ЗАЯВКУ ПРИЙНЯТО В ОБРОБКУ',
       'Заявку прийнято в обробку. Якщо не відповіли протягом 10 хвилин — телефонуйте 0982769859'
     );
-    trackGoogleAdsConversion();
     form.reset();
   } catch (err) {
     console.warn('Webhook error:', err);
